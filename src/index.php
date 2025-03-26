@@ -24,7 +24,7 @@
         <h1>Задания</h1>
         <div class="d-flex flex-wrap justify-content-center align-items-center my-5">
             <?php
-                $tasks = 8;
+                $tasks = 9;
                 for ($i=1; $i <= $tasks; $i++) { 
                     echo "<a href='./lesson$i' class='btn btn-primary btn-task'>Задание $i</a>";
                 }
