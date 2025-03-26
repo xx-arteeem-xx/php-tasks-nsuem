@@ -1,5 +1,23 @@
 <?php
+    function stringToWordsArray($string) {
+        if (empty($string)) {
+            return [];
+        };
+        $cleanString = preg_replace('/[^\p{L}\p{N}\s]/u', '', mb_strtolower($string));
+        return preg_split('/\s+/', $cleanString, -1, PREG_SPLIT_NO_EMPTY);
+    };
+    
+    function countWordFrequency($wordsArray) {
+        return array_count_values($wordsArray);
+    };
 
+    $data = $_POST;
+    if (isset($data["str"])){
+        $str = $data["str"];
+        $wordsArray = stringToWordsArray($str);
+        $wordFrequency = countWordFrequency($wordsArray);
+        ksort($wordFrequency);
+    }
 ?>
 
 <?php
@@ -8,24 +26,32 @@
 ?>
 
 <div class="container my-5">
-    <table class="table table-striped table-dark mt-3">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">value</th>
-                <th scope="col">equal?</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($values as $key => $value): ?>
+    <form action="./" method="post">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="str">Введите строку</span>
+            <input type="text" name="str" class="form-control">
+            <input type="submit" value="Выполнить!" class="btn btn-secondary">
+        </div>
+    </form>
+    <hr>
+    <?php if (isset($wordFrequency)): ?>
+        <table class="table table-striped table-dark mt-3">
+            <thead>
                 <tr>
-                    <th scope="row"><?=$key+1?></th>
-                    <td><?=$value?></td>
-                    <td><?= ($value==$find)? "yes" : "no"  ?></td>
+                    <th scope="col">word</th>
+                    <th scope="col">count</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($wordFrequency as $key => $value): ?>
+                    <tr>
+                        <td><?=$key?></td>
+                        <td><?=$value?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 
 <?php
