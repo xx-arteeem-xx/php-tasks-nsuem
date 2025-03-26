@@ -28,28 +28,23 @@
 
     function validatePassword($password) {
         $errors = [];
-        
-        // 1. Проверка длины пароля
+    
         if (strlen($password) < 8) {
             $errors[] = "Пароль должен содержать не менее 8 символов";
         }
         
-        // 2. Проверка на наличие заглавной буквы
         if (!preg_match('/[A-ZА-ЯЁ]/u', $password)) {
             $errors[] = "Пароль должен содержать хотя бы одну заглавную букву";
         }
         
-        // 3. Проверка на наличие строчной буквы
         if (!preg_match('/[a-zа-яё]/u', $password)) {
             $errors[] = "Пароль должен содержать хотя бы одну строчную букву";
         }
         
-        // 4. Проверка на наличие цифры
         if (!preg_match('/[0-9]/', $password)) {
             $errors[] = "Пароль должен содержать хотя бы одну цифру";
         }
         
-        // 5. Проверка на наличие специального символа
         if (!preg_match('/[#\$%&\'\(\)\*\+,\-\.\/;<=>\?@\[\\\\\]\^_\{\}!~]/', $password)) {
             $errors[] = "Пароль должен содержать хотя бы один специальный символ: # $ % & ' ( ) * + , - . / ; <= > ? @ [ \ ] ^ _ { ! } ~";
         }
@@ -65,7 +60,7 @@
             $message = "Пароль соответствует всем требованиям!";
             $messageClass = 'success';
         } else {
-            $message = "<ul class='lead text-danger'> <li>" . implode("</li><li>", $errors) . "</li>";
+            $message = implode("<br>", $errors);
             $messageClass = 'danger';
         }
     }
@@ -99,9 +94,11 @@
             <li>Хотя бы одна цифра</li>
             <li>Хотя бы один специальный символ: # $ % & ' ( ) * + , - . / ; <= > ? @ [ \ ] ^ _ { ! } ~</li>
         </ul>
-        <p class="lead text-<?=$messageClass?>">
-            <?=$message?>
-        </p>
+        <?php if (isset(($message))): ?>
+            <p class="lead text-<?=$messageClass?>">
+                <?=$message?>
+            </p>
+        <?php endif; ?>
     </div>
 
 </div>
