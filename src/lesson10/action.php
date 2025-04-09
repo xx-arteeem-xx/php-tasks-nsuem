@@ -23,3 +23,9 @@
 
     echo "Спасибо, $name! Ваше сообщение отпралено!";
 ?>
+
+<script>
+    setTimeout(function() {
+        window.location.href = "index.php";
+    }, 2000); 
+</script>
